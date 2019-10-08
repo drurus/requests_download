@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """Download files using requests and save them to a target path
 
 Usage example::
@@ -19,7 +21,7 @@ Usage example::
 
 import requests
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 class TrackerBase(object):
     def on_start(self, response):
@@ -62,7 +64,7 @@ class HashTracker(TrackerBase):
     def on_chunk(self, chunk):
         self.hashobj.update(chunk)
 
-def download(url, target, headers=None, trackers=()):
+def download(url, target, headers=None, trackers=(), timeout=None, proxies=None, verify=False, cert=None):
     """Download a file using requests.
 
     This is like urllib.request.urlretrieve, but:
@@ -74,7 +76,7 @@ def download(url, target, headers=None, trackers=()):
     if headers is None:
         headers = {}
     headers.setdefault('user-agent', 'requests_download/'+__version__)
-    r = requests.get(url, headers=headers, stream=True)
+    r = requests.get(url, headers=headers, stream=True, timeout=timeout, proxies=proxies, verify=verify, cert=cert)
     r.raise_for_status()
     for t in trackers:
         t.on_start(r)

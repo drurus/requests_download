@@ -52,3 +52,7 @@ To make your own tracker, subclass TrackerBase and define any of these methods:
         def on_finish(self):
             """Called when the download has completed"""
             pass
+
+**08/10/2019**
+It has been added proxies and certificates support.
+
